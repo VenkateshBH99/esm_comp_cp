@@ -55,14 +55,14 @@ const Content = (props) => {
 
 
   const handleChange = (e, value) => {
-    console.log(value)
+
 
     if (value) {
-      console.log(orderStatus)
+
       let x = orderStatus;
       x['COMPLETED'] = true;
       setorderStatus(x)
-      console.log(x)
+
     }
     else {
 
@@ -84,7 +84,7 @@ const Content = (props) => {
 
   useEffect(() => {
     const token = localStorage.getItem("authenticationToken");
-    console.log(Object.keys(orderStatus))
+
     axios.get('http://127.0.0.1:8000/api/v1/orders/', {
       headers: {
         'Authorization': "JWT " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJpc19hY3RpdmUiOnRydWUsImlzX3N1c3BlbmRlZCI6ZmFsc2UsInBob25lIjoiKzkxOTMwMjgxMTU5NyIsInRoaXJkX3BhcnR5X2lkIjoiZmQwZWFlNGEtODBhMC00ODkzLTkyMDMtMDJjY2RlNDc0MzI3IiwicHJvZmlsZSI6eyJyb2xlIjoiUFJPVklERVIiLCJzdXNwZW5kZWQiOmZhbHNlfSwiZXhwIjoxNjI4NDEwODgzLCJvcmlnX2lhdCI6MTYyMDYzNDg4M30.uRwg2AUmzSIoOU0kWWarfHUcyrUNLGjk1yMh15Laj5c"
@@ -104,7 +104,7 @@ const Content = (props) => {
 
       })
       .catch(function (error) {
-        console.log(error);
+
         alert("Unauthorize or slow internet")
 
       })
