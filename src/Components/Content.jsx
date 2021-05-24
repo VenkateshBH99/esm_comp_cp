@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import Card from '@material-ui/core/Card';
 import { makeStyles } from '@material-ui/core/styles';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -50,7 +49,6 @@ const Content = (props) => {
   const [customer, setcustomer] = useState(0);
   const [orderStatus, setorderStatus] = useState({});
   const [filterCompleted, setFilterCompleted] = useState(true)
-
   const [page, setPage] = useState(1);
 
 
@@ -65,13 +63,9 @@ const Content = (props) => {
 
     }
     else {
-
       let x = orderStatus;
       delete x.COMPLETED;
-
       setorderStatus(x);
-
-
     }
     setFilterCompleted(!filterCompleted)
   }
@@ -140,13 +134,7 @@ const Content = (props) => {
       Customer_name: item.order.customer_name,
       Customer_number: item.order.customer_phones,
       Customer_address: item.order.delivery_address
-
-
-
     }
-
-
-
   })
 
 
@@ -185,40 +173,30 @@ const Content = (props) => {
             <h3>Filters</h3>
             <div style={{ textAlign: "left", paddingLeft: "30px", paddingLeft: "30px" }}>
               <Checkbox
-                //checked={checked}
                 onChange={handleChange}
-              // inputProps={{ 'aria-label': 'primary checkbox' }}
               />
               <Typography style={{ display: "inline" }}>Completed</Typography>
             </div>
             <div style={{ textAlign: "left", paddingLeft: "30px" }}>
               <Checkbox
-                //checked={checked}
-                //onChange={handleChange}
                 inputProps={{ 'aria-label': 'primary checkbox' }}
               />
               <Typography style={{ display: "inline", align: "left" }}>Created</Typography>
             </div>
             <div style={{ textAlign: "left", paddingLeft: "30px" }}>
               <Checkbox
-                //checked={checked}
-                //onChange={handleChange}
                 inputProps={{ 'aria-label': 'primary checkbox' }}
               />
               <Typography style={{ display: "inline", align: "left" }}>Merchant Updated</Typography>
             </div>
             <div style={{ textAlign: "left", paddingLeft: "30px" }}>
               <Checkbox
-                //checked={checked}
-                //onChange={handleChange}
                 inputProps={{ 'aria-label': 'primary checkbox' }}
               />
               <Typography style={{ display: "inline", align: "left" }}>Merchant Cancelled</Typography>
             </div>
             <div style={{ textAlign: "left", paddingLeft: "30px" }}>
               <Checkbox
-                //checked={checked}
-                //onChange={handleChange}
                 inputProps={{ 'aria-label': 'primary checkbox' }}
               />
               <Typography style={{ display: "inline", align: "left" }}>Created</Typography>
@@ -274,9 +252,6 @@ const Content = (props) => {
 
 
       </div>
-
-
-
     </div>
   );
 };
