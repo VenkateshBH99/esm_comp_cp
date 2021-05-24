@@ -78,13 +78,14 @@ const Content = (props) => {
 
   useEffect(() => {
     const token = localStorage.getItem("authenticationToken");
+    const circleID = localStorage.getItem("circle_id");
 
     axios.get('http://127.0.0.1:8000/api/v1/orders/', {
       headers: {
-        'Authorization': "JWT " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJpc19hY3RpdmUiOnRydWUsImlzX3N1c3BlbmRlZCI6ZmFsc2UsInBob25lIjoiKzkxOTMwMjgxMTU5NyIsInRoaXJkX3BhcnR5X2lkIjoiZmQwZWFlNGEtODBhMC00ODkzLTkyMDMtMDJjY2RlNDc0MzI3IiwicHJvZmlsZSI6eyJyb2xlIjoiUFJPVklERVIiLCJzdXNwZW5kZWQiOmZhbHNlfSwiZXhwIjoxNjI4NDEwODgzLCJvcmlnX2lhdCI6MTYyMDYzNDg4M30.uRwg2AUmzSIoOU0kWWarfHUcyrUNLGjk1yMh15Laj5c"
+        'Authorization': "JWT " + token
       },
       params: {
-        circle_id: props.circleId,
+        circle_id: circleID,
         order_status: Object.keys(orderStatus).join(','),
         page: page,
 
