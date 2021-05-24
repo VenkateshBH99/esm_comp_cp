@@ -16,6 +16,7 @@ import Grid from '@material-ui/core/Grid';
 import { Pagination } from '@material-ui/lab';
 import axios from 'axios';
 
+import config from '../Utility/config'
 const getDateFormat = require('../Utility/datetime')
 const useStyles = makeStyles({
   root: {
@@ -80,7 +81,7 @@ const Content = (props) => {
     const token = localStorage.getItem("authenticationToken");
     const circleID = localStorage.getItem("circle_id");
 
-    axios.get('http://127.0.0.1:8000/api/v1/orders/', {
+    axios.get(config.apiUrl, {
       headers: {
         'Authorization': "JWT " + token
       },
