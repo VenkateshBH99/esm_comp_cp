@@ -77,7 +77,7 @@ const Content = (props) => {
 
 
   }
-  console.log({ circleId })
+
 
   useEffect(() => {
     const token = localStorage.getItem("authenticationToken");
