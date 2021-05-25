@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 import Card from '@material-ui/core/Card';
 import { makeStyles } from '@material-ui/core/styles';
@@ -51,7 +52,7 @@ const Content = (props) => {
   const [orderStatus, setorderStatus] = useState({});
   const [filterCompleted, setFilterCompleted] = useState(true)
   const [page, setPage] = useState(1);
-
+  const { circleId, authToken } = useParams();
 
   const handleChange = (e, value) => {
 
@@ -76,17 +77,20 @@ const Content = (props) => {
 
 
   }
+  console.log({ circleId })
 
   useEffect(() => {
     const token = localStorage.getItem("authenticationToken");
+
     const circleID = localStorage.getItem("circle_id");
+
 
     axios.get(config.apiUrl, {
       headers: {
-        'Authorization': "JWT " + token
+        'Authorization': "JWT " + { authToken }.authToken
       },
       params: {
-        circle_id: circleID,
+        circle_id: { circleId }.circleId,
         order_status: Object.keys(orderStatus).join(','),
         page: page,
 
