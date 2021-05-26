@@ -15,6 +15,8 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import { Pagination } from '@material-ui/lab';
+import RefreshIcon from '@material-ui/icons/Refresh';
+import { Button } from 'react-bootstrap';
 import axios from 'axios';
 
 import config from '../Utility/config'
@@ -77,7 +79,6 @@ const Content = (props) => {
 
 
   }
-
 
   useEffect(() => {
     const token = localStorage.getItem("authenticationToken");
@@ -147,6 +148,12 @@ const Content = (props) => {
 
   return (
     <div className={classes.root}>
+      <Button onClick={() => { setFilterCompleted(!filterCompleted) }}>
+        <RefreshIcon >
+          <h1 onClick={() => { setFilterCompleted(!filterCompleted) }}><i></i></h1>
+        </RefreshIcon>
+      </Button>
+
       <div className={classes.flexDiv1}>
         <Card raised={true} className={classes.card}>
           <CardContent>
@@ -258,7 +265,7 @@ const Content = (props) => {
 
 
       </div>
-    </div>
+    </div >
   );
 };
 
