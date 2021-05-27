@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import Content from './Components/Content';
-import Orders from './Components/Orders';
+import Title from './Components/Title';
+
 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
@@ -10,11 +11,12 @@ function App() {
 
   return (
     <div className="App">
-      <Orders></Orders>
+      <Title></Title>
       <BrowserRouter>
         <Switch>
 
           <Route path="/:circleId/:authToken" >
+
             <Content></Content>
           </Route>
         </Switch>

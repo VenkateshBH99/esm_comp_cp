@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import Card from '@material-ui/core/Card';
+
 import { makeStyles } from '@material-ui/core/styles';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -12,35 +10,18 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import { Pagination } from '@material-ui/lab';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
 
-import config from '../Utility/config'
+import config from '../Utility/config';
+import blockStyle from '../Utility/Style';
+import Counter from '../Components/Counter';
+import Filters from '../Components/Filters'
 const getDateFormat = require('../Utility/datetime')
-const useStyles = makeStyles({
-  root: {
-    padding: "10px",
-  },
-  flexDiv1: {
-    display: "flex",
-    justifyContent: "space-around"
-  },
-  card: {
-    width: "20%",
-    backgroundColor: "#ffffff",
-    textAlign: "center",
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
-});
+const useStyles = makeStyles(blockStyle);
 
 
 
@@ -81,11 +62,11 @@ const Content = (props) => {
   }
 
   useEffect(() => {
-    const token = localStorage.getItem("authenticationToken");
 
+    const token = localStorage.getItem("authenticationToken");
     const circleID = localStorage.getItem("circle_id");
 
-
+    //Making API call to backend
     axios.get(config.apiUrl, {
       headers: {
         'Authorization': "JWT " + { authToken }.authToken
@@ -94,20 +75,15 @@ const Content = (props) => {
         circle_id: { circleId }.circleId,
         order_status: Object.keys(orderStatus).join(','),
         page: page,
-
       }
     })
       .then(response => {
         // alert("success")
-
         setTableData(response.data.results)
         setorderCount(response.data.count)
-
       })
       .catch(function (error) {
-
         alert("Unauthorize or slow internet")
-
       })
   }, [filterCompleted, page])
 
@@ -127,8 +103,9 @@ const Content = (props) => {
     { id: "Customer_number", label: "Customer Number", minWidth: 50, align: 'left' },
     { id: "Customer_address", label: "Customer Address", minWidth: 50, align: 'left' },
   ];
-  const rows = tableData.map((item, key) => {
 
+
+  const rows = tableData.map((item, key) => {
     return {
       id: item.order.order_id,
       Order_created_date: getDateFormat(item.order.created),
@@ -147,75 +124,21 @@ const Content = (props) => {
 
 
   return (
+
+
     <div className={classes.root}>
+      <Counter orderCount={orderCount} />
       <Button onClick={() => { setFilterCompleted(!filterCompleted) }}>
         <RefreshIcon >
           <h1 onClick={() => { setFilterCompleted(!filterCompleted) }}><i></i></h1>
         </RefreshIcon>
       </Button>
 
-      <div className={classes.flexDiv1}>
-        <Card raised={true} className={classes.card}>
-          <CardContent>
-            <Typography>Orders Count</Typography>
-            <Typography>{orderCount}</Typography>
-          </CardContent>
-        </Card>
-        <Card raised={true} className={classes.card}>
-          <CardContent>
-            <Typography>Orders Sum</Typography>
-            <Typography>{orderSum}</Typography>
-          </CardContent>
-        </Card>
-        <Card raised={true} className={classes.card}>
-          <CardContent>
-            <Typography>Orders Seller</Typography>
-            <Typography>{orderSeller}</Typography>
-          </CardContent>
-        </Card>
-        <Card raised={true} className={classes.card}>
-          <CardContent>
-            <Typography>Customer</Typography>
-            <Typography>{customer}</Typography>
-          </CardContent>
-        </Card>
-      </div>
       <div style={{ marginTop: "2em" }}>
-        <Grid container spacing={3}>
-          <Grid item xs={2} style={{ padding: "0px" }}>
-            <h3>Filters</h3>
-            <div style={{ textAlign: "left", paddingLeft: "30px", paddingLeft: "30px" }}>
-              <Checkbox
-                onChange={handleChange}
-              />
-              <Typography style={{ display: "inline" }}>Completed</Typography>
-            </div>
-            <div style={{ textAlign: "left", paddingLeft: "30px" }}>
-              <Checkbox
-                inputProps={{ 'aria-label': 'primary checkbox' }}
-              />
-              <Typography style={{ display: "inline", align: "left" }}>Created</Typography>
-            </div>
-            <div style={{ textAlign: "left", paddingLeft: "30px" }}>
-              <Checkbox
-                inputProps={{ 'aria-label': 'primary checkbox' }}
-              />
-              <Typography style={{ display: "inline", align: "left" }}>Merchant Updated</Typography>
-            </div>
-            <div style={{ textAlign: "left", paddingLeft: "30px" }}>
-              <Checkbox
-                inputProps={{ 'aria-label': 'primary checkbox' }}
-              />
-              <Typography style={{ display: "inline", align: "left" }}>Merchant Cancelled</Typography>
-            </div>
-            <div style={{ textAlign: "left", paddingLeft: "30px" }}>
-              <Checkbox
-                inputProps={{ 'aria-label': 'primary checkbox' }}
-              />
-              <Typography style={{ display: "inline", align: "left" }}>Created</Typography>
-            </div>
 
-          </Grid>
+
+        <Grid container spacing={3}>
+          <Filters handleChange={handleChange}></Filters>
           <Grid item xs={10}>
             <TableContainer component={Paper} style={{ height: "100%", width: "75%", display: "block", overflow: "auto" }}>
               <Table className={classes.table} aria-label="simple table">
