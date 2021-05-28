@@ -36,24 +36,49 @@ const Content = (props) => {
   const [filterCompleted, setFilterCompleted] = useState(true)
   const [page, setPage] = useState(1);
   const { circleId, authToken } = useParams();
+  // const [rows, setRows] = useState([]);
+  //const { activeFilter, setActiveFilter } = useState(['COMPLETED']);
+  let filterList = [{
+    id: 11,
+    name: "Created",
+    value: "CREATED"
+  },
+  {
+    id: 12,
+    name: "Completed",
+    value: "COMPLETED"
+  },
+  {
+    id: 13,
+    name: "Assigned_to_DA",
+    value: "ASSIGNED_TO_DA"
+  }];
+  const [activeFilter, setActiveFilter] = useState([]);
 
-  const handleChange = (e, value) => {
+  const onFilterChange = (filter) => {
 
 
-    if (value) {
-
-      let x = orderStatus;
-      x['COMPLETED'] = true;
-      setorderStatus(x)
-
-    }
-    else {
-      let x = orderStatus;
-      delete x.COMPLETED;
-      setorderStatus(x);
+    if (filter === "ALL") {
+      if (activeFilter.length === filterList.length) {
+        setActiveFilter([]);
+      } else {
+        setActiveFilter(filterList.map(filter => filter.value));
+      }
+    } else {
+      if (activeFilter.includes(filter)) {
+        const filterIndex = activeFilter.indexOf(filter);
+        const newFilter = [...activeFilter];
+        newFilter.splice(filterIndex, 1);
+        setActiveFilter(newFilter);
+      } else {
+        setActiveFilter([...activeFilter, filter]);
+      }
     }
     setFilterCompleted(!filterCompleted)
   }
+
+
+
   const changePage = (e, value) => {
 
     setPage(value)
@@ -73,7 +98,7 @@ const Content = (props) => {
       },
       params: {
         circle_id: { circleId }.circleId,
-        order_status: Object.keys(orderStatus).join(','),
+        order_status: activeFilter.join(),
         page: page,
       }
     })
@@ -86,6 +111,29 @@ const Content = (props) => {
         alert("Unauthorize or slow internet")
       })
   }, [filterCompleted, page])
+
+
+
+  const rows = (tableData.map((item, key) => {
+
+
+    return {
+      id: item.order.order_id,
+      Order_created_date: getDateFormat(item.order.created),
+      last_update: getDateFormat(item.order.modified),
+      Status: item.order.order_status,
+      Order_amt: item.order.order_total,
+      Item_Total: item.order.item_total,
+      Payment_Status: item.order.payment_info.status,
+      Payment_mode: item.order.payment_info.via,
+      Customer_name: item.order.customer_name,
+      Customer_number: item.order.customer_phones,
+      Customer_address: item.order.delivery_address
+
+    }
+  }))
+
+
 
 
 
@@ -105,21 +153,11 @@ const Content = (props) => {
   ];
 
 
-  const rows = tableData.map((item, key) => {
-    return {
-      id: item.order.order_id,
-      Order_created_date: getDateFormat(item.order.created),
-      last_update: getDateFormat(item.order.modified),
-      Status: item.order.order_status,
-      Order_amt: item.order.order_total,
-      Item_Total: item.order.item_total,
-      Payment_Status: item.order.payment_info.status,
-      Payment_mode: item.order.payment_info.via,
-      Customer_name: item.order.customer_name,
-      Customer_number: item.order.customer_phones,
-      Customer_address: item.order.delivery_address
-    }
-  })
+
+
+
+
+
 
 
 
@@ -138,7 +176,7 @@ const Content = (props) => {
 
 
         <Grid container spacing={3}>
-          <Filters handleChange={handleChange}></Filters>
+          <Filters handleChange={onFilterChange}></Filters>
           <Grid item xs={10}>
             <TableContainer component={Paper} style={{ height: "100%", width: "75%", display: "block", overflow: "auto" }}>
               <Table className={classes.table} aria-label="simple table">
