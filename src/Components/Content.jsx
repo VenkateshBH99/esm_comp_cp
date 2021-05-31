@@ -19,7 +19,8 @@ import axios from 'axios';
 import config from '../Utility/config';
 import blockStyle from '../Utility/Style';
 import Counter from '../Components/Counter';
-import Filters from '../Components/Filters'
+import Filters from '../Components/Filters';
+import { orderFilters, paymentFilters } from '../Utility/filterList';
 const getDateFormat = require('../Utility/datetime')
 const useStyles = makeStyles(blockStyle);
 
@@ -36,46 +37,54 @@ const Content = (props) => {
   const [filterCompleted, setFilterCompleted] = useState(true)
   const [page, setPage] = useState(1);
   const { circleId, authToken } = useParams();
-  // const [rows, setRows] = useState([]);
-  //const { activeFilter, setActiveFilter } = useState(['COMPLETED']);
-  let filterList = [{
-    id: 11,
-    name: "Created",
-    value: "CREATED"
-  },
-  {
-    id: 12,
-    name: "Completed",
-    value: "COMPLETED"
-  },
-  {
-    id: 13,
-    name: "Assigned_to_DA",
-    value: "ASSIGNED_TO_DA"
-  }];
-  const [activeFilter, setActiveFilter] = useState([]);
+  const [activeOrderFilter, setActiveOrderFilter] = useState([]);
+  const [activePaymentFilter, setActivePaymentFilter] = useState([]);
 
-  const onFilterChange = (filter) => {
+  const onOrderFilterChange = (filter) => {
 
 
-    if (filter === "ALL") {
-      if (activeFilter.length === filterList.length) {
-        setActiveFilter([]);
+    if (filter === "ALL_ORDER") {
+      if (activeOrderFilter.length === orderFilters.length) {
+        setActiveOrderFilter([]);
       } else {
-        setActiveFilter(filterList.map(filter => filter.value));
+        setActiveOrderFilter(orderFilters.map(filter => filter.value));
       }
     } else {
-      if (activeFilter.includes(filter)) {
-        const filterIndex = activeFilter.indexOf(filter);
-        const newFilter = [...activeFilter];
+      if (activeOrderFilter.includes(filter)) {
+        const filterIndex = activeOrderFilter.indexOf(filter);
+        const newFilter = [...activeOrderFilter];
         newFilter.splice(filterIndex, 1);
-        setActiveFilter(newFilter);
+        setActiveOrderFilter(newFilter);
       } else {
-        setActiveFilter([...activeFilter, filter]);
+        setActiveOrderFilter([...activeOrderFilter, filter]);
       }
     }
     setFilterCompleted(!filterCompleted)
   }
+
+  const onPaymentFilterChange = (filter) => {
+
+
+    if (filter === "ALL_PAYMENT") {
+      if (activePaymentFilter.length === paymentFilters.length) {
+        setActivePaymentFilter([]);
+      } else {
+        setActivePaymentFilter(paymentFilters.map(filter => filter.value));
+      }
+    } else {
+      if (activePaymentFilter.includes(filter)) {
+        const filterIndex = activePaymentFilter.indexOf(filter);
+        const newFilter = [...activePaymentFilter];
+        newFilter.splice(filterIndex, 1);
+        setActivePaymentFilter(newFilter);
+      } else {
+        setActivePaymentFilter([...activePaymentFilter, filter]);
+      }
+    }
+
+    setFilterCompleted(!filterCompleted)
+  }
+
 
 
 
@@ -98,8 +107,9 @@ const Content = (props) => {
       },
       params: {
         circle_id: { circleId }.circleId,
-        order_status: activeFilter.join(),
+        order_status: activeOrderFilter.join(),
         page: page,
+        payment_status: activePaymentFilter.join()
       }
     })
       .then(response => {
@@ -110,6 +120,7 @@ const Content = (props) => {
       .catch(function (error) {
         alert("Unauthorize or slow internet")
       })
+    console.log(activePaymentFilter)
   }, [filterCompleted, page])
 
 
@@ -124,6 +135,7 @@ const Content = (props) => {
       Status: item.order.order_status,
       Order_amt: item.order.order_total,
       Item_Total: item.order.item_total,
+      Delivery_Agent: item.order.da_info.name,
       Payment_Status: item.order.payment_info.status,
       Payment_mode: item.order.payment_info.via,
       Customer_name: item.order.customer_name,
@@ -153,14 +165,6 @@ const Content = (props) => {
   ];
 
 
-
-
-
-
-
-
-
-
   return (
 
 
@@ -171,12 +175,9 @@ const Content = (props) => {
           <h1 onClick={() => { setFilterCompleted(!filterCompleted) }}><i></i></h1>
         </RefreshIcon>
       </Button>
-
       <div style={{ marginTop: "2em" }}>
-
-
         <Grid container spacing={3}>
-          <Filters handleChange={onFilterChange}></Filters>
+          <Filters handleOrderChange={onOrderFilterChange} handlePaymentChange={onPaymentFilterChange} activeOrderFilter={activeOrderFilter} activePaymentFilter={activePaymentFilter}></Filters>
           <Grid item xs={10}>
             <TableContainer component={Paper} style={{ height: "100%", width: "75%", display: "block", overflow: "auto" }}>
               <Table className={classes.table} aria-label="simple table">
@@ -207,6 +208,7 @@ const Content = (props) => {
                           <TableCell align="left">{row.Status}</TableCell>
                           <TableCell align="left">{row.Order_amt}</TableCell>
                           <TableCell align="left">{row.Item_Total}</TableCell>
+                          <TableCell align="left">{row.Delivery_Agent}</TableCell>
                           <TableCell align="left">{row.Payment_Status}</TableCell>
                           <TableCell align="left">{row.Payment_mode}</TableCell>
                           <TableCell align="left">{row.Customer_name}</TableCell>
