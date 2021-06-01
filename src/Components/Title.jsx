@@ -4,7 +4,7 @@ import "../App.css";
 const Title = () => {
     return (
 
-        <div className="stock-container">Welcome to CP-Console</div>
+        <div className="stock-container"></div>
 
     );
 };
