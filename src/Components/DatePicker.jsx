@@ -8,12 +8,26 @@ import {
     KeyboardDatePicker,
 } from '@material-ui/pickers';
 
-export default function DatePicker() {
-    // The first commit of Material-UI
-    const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
+import { getDateEpoch } from '../Utility/paramsConvert';
 
-    const handleDateChange = (date) => {
-        setSelectedDate(date);
+export default function DatePicker(props) {
+    // The first commit of Material-UI
+    const [fromDate, setFromDate] = React.useState(new Date());
+    const [toDate, setToDate] = React.useState(new Date());
+
+    const handleDateFromChange = (date) => {
+        setFromDate(date);
+        props.handleDateChange(String(getDateEpoch(date)).slice(0, 10), "ChangeFrom")
+
+
+
+    };
+    const handleDateToChange = (date) => {
+        setToDate(date);
+        props.handleDateChange(String(getDateEpoch(date)).slice(0, 10), "ChangeTo")
+
+
+
     };
 
     return (
@@ -26,8 +40,8 @@ export default function DatePicker() {
                     margin="normal"
                     id="date-picker-inline"
                     label="Orders From"
-                    value={selectedDate}
-                    onChange={handleDateChange}
+                    value={fromDate}
+                    onChange={handleDateFromChange}
                     KeyboardButtonProps={{
                         'aria-label': 'change date',
                     }}
@@ -39,8 +53,8 @@ export default function DatePicker() {
                     id="date-picker-dialog"
                     label="Orders To"
                     format="MM/dd/yyyy"
-                    value={selectedDate}
-                    onChange={handleDateChange}
+                    value={toDate}
+                    onChange={handleDateToChange}
                     KeyboardButtonProps={{
                         'aria-label': 'change date',
                     }}

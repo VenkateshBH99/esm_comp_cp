@@ -17,27 +17,27 @@ function formatAMPM(date) {
     return strTime;
 }
 const getCustomerAddress = (data) => {
-    let resData;
     try {
-        resData = data.pretty_address;
+        return data.pretty_address;
     }
     catch {
-        resData = null;
+        return null;
     }
-
-    return resData
 };
 const getDeliveryAgentName = (data) => {
-    let resData;
     try {
-        resData = data.profile_name + "-" + data.user_profile.phone;
+        return data.profile_name + "-" + data.user_profile.phone;
     }
     catch {
-        resData = null;
+        return null;
     }
-
-    return resData
 };
 
-export { getCustomerAddress, getDateFormat, getDeliveryAgentName };
+const getDateEpoch = (date) => {
+    return Date.parse(date)
+}
+
+
+
+export { getCustomerAddress, getDateFormat, getDeliveryAgentName, getDateEpoch };
 

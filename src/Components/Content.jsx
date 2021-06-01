@@ -41,6 +41,8 @@ const Content = (props) => {
   const { circleId, authToken } = useParams();
   const [activeOrderFilter, setActiveOrderFilter] = useState([]);
   const [activePaymentFilter, setActivePaymentFilter] = useState([]);
+  const [fromEpochDate, setFromEpochDate] = useState();
+  const [toEpochDate, setToEpochDate] = useState();
 
   const onOrderFilterChange = (filter) => {
 
@@ -97,6 +99,19 @@ const Content = (props) => {
 
   }
 
+  const onDateEpochChange = (val, check) => {
+    if (check === "ChangeFrom") {
+      setFromEpochDate(val)
+
+    }
+    else if (check === "ChangeTo") {
+      setToEpochDate(val)
+    }
+    setFilterCompleted(!filterCompleted)
+
+  }
+
+
   useEffect(() => {
 
     const token = localStorage.getItem("authenticationToken");
@@ -111,7 +126,9 @@ const Content = (props) => {
         circle_id: { circleId }.circleId,
         order_status: activeOrderFilter.join(),
         page: page,
-        payment_status: activePaymentFilter.join()
+        payment_status: activePaymentFilter.join(),
+        dt_from: fromEpochDate,
+        dt_to: toEpochDate
       }
     })
       .then(response => {
@@ -122,7 +139,7 @@ const Content = (props) => {
       .catch(function (error) {
         alert("Unauthorize or slow internet")
       })
-    console.log(activePaymentFilter)
+
   }, [filterCompleted, page])
 
 
@@ -182,9 +199,12 @@ const Content = (props) => {
 
     <div className={classes.root}>
       <Counter orderCount={orderCount} />
-      <Button onClick={() => { setFilterCompleted(!filterCompleted) }}>
+      <Button onClick={() => {
+        setFromEpochDate();
+        setToEpochDate();
+        setFilterCompleted(!filterCompleted)
+      }}>
         <RefreshIcon >
-          <h1 onClick={() => { setFilterCompleted(!filterCompleted) }}><i></i></h1>
         </RefreshIcon>
       </Button>
 
@@ -192,7 +212,7 @@ const Content = (props) => {
 
         <Grid container spacing={3}>
           <Grid item xs={2} style={{ padding: "0px" }}>
-            <DatePicker></DatePicker>
+            <DatePicker handleDateChange={onDateEpochChange} ></DatePicker>
 
 
 
