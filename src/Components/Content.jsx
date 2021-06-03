@@ -127,8 +127,8 @@ const Content = (props) => {
         order_status: activeOrderFilter.join(),
         page: page,
         payment_status: activePaymentFilter.join(),
-        dt_from: fromEpochDate,
-        dt_to: toEpochDate
+        dt_last_modified_from: fromEpochDate,
+        dt_last_modified_to: toEpochDate
       }
     })
       .then(response => {
