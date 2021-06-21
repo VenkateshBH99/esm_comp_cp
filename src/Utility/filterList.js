@@ -1,52 +1,52 @@
 const orderFilters = [{
     id: 11,
-    name: "Created",
+    label: "Created",
     value: "CREATED"
 },
 {
     id: 12,
-    name: "Completed",
+    label: "Completed",
     value: "COMPLETED"
 },
 {
     id: 13,
-    name: "Assigned_to_DA",
+    label: "Assigned_to_DA",
     value: "ASSIGNED_TO_DA"
 },
 {
     id: 14,
-    name: "Merchant Updated",
+    label: "Merchant Updated",
     value: "MERCHANT_UPDATED"
 },
 {
     id: 15,
-    name: "Customer Pending",
+    label: "Customer Pending",
     value: "CUSTOMER_PENDING"
 },
 {
     id: 16,
-    name: "Provider Cancelled ",
+    label: "Provider Cancelled ",
     value: "PROVIDER_CANCELLED"
 },
 {
     id: 17,
-    name: "Ready for Pickup ",
+    label: "Ready for Pickup ",
     value: "READY_FOR_PICKUP"
 },
 {
     id: 18,
-    name: "Merchant Accepted",
+    label: "Merchant Accepted",
     value: "MERCHANT_ACCEPTED"
 },
 {
     id: 19,
-    name: "Requesting_to_DA",
+    label: "Requesting_to_DA",
     value: "REQUESTING_TO_DA"
 },
 
 {
     id: 20,
-    name: "Picked Up By DA",
+    label: "Picked Up By DA",
     value: "PICKED_UP_BY_DA"
 }];
 
@@ -55,41 +55,88 @@ const paymentFilters = [
 
     {
         id: 12,
-        name: "Initiated",
+        label: "Initiated",
         value: "INITIATED"
     },
     {
         id: 13,
-        name: "Approved",
+        label: "Approved",
         value: "APPROVED"
     },
     {
         id: 14,
-        name: "Rejected",
+        label: "Rejected",
         value: "REJECTED"
     },
     {
         id: 15,
-        name: "Success",
+        label: "Success",
         value: "SUCCESS"
     },
     {
         id: 16,
-        name: "Fail ",
+        label: "Fail ",
         value: "FAIL"
     },
     {
         id: 17,
-        name: "Refund Success ",
+        label: "Refund Success ",
         value: "REFUND_SUCCESS"
     },
     {
         id: 18,
-        name: "Refund Fail",
+        label: "Refund Fail",
         value: "REFUND_FAIL"
     }];
 
+const deliveryFilters = [
 
 
+    {
+        id: 12,
+        label: "Self Pickup",
+        value: "SELF_PICK_UP"
+    },
+    {
+        id: 13,
+        label: "DA Delivery",
+        value: "DA_DELIVERY"
+    }];
 
-export { orderFilters, paymentFilters };
+const paymentModeFilters = [
+
+
+    {
+        id: 12,
+        label: "Cash On Delivery",
+        value: "COD"
+    },
+    {
+        id: 13,
+        label: "Direct UPI",
+        value: "Direct UPI"
+    },
+    {
+        id: 14,
+        label: "UPI",
+        value: "upi"
+    },
+    {
+        id: 15,
+        label: "NetBanking",
+        value: "netbanking"
+    },
+    {
+        id: 16,
+        label: "Wallet",
+        value: "wallet"
+    },
+    {
+        id: 17,
+        label: "Card",
+        value: "card"
+    },
+];    
+
+
+export { orderFilters, paymentFilters, deliveryFilters, paymentModeFilters};

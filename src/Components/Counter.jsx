@@ -23,24 +23,7 @@ const Counter = (props) => {
                         <Typography>{props.orderCount}</Typography>
                     </CardContent>
                 </Card>
-                <Card raised={true} className={classes.card}>
-                    <CardContent>
-                        <Typography>Orders Sum</Typography>
-                        <Typography>{0}</Typography>
-                    </CardContent>
-                </Card>
-                <Card raised={true} className={classes.card}>
-                    <CardContent>
-                        <Typography>Orders Seller</Typography>
-                        <Typography>{0}</Typography>
-                    </CardContent>
-                </Card>
-                <Card raised={true} className={classes.card}>
-                    <CardContent>
-                        <Typography>Customer</Typography>
-                        <Typography>{0}</Typography>
-                    </CardContent>
-                </Card>
+                
             </div>
         </div>
     );

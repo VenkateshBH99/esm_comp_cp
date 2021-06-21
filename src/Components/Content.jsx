@@ -20,10 +20,10 @@ import config from '../Utility/config';
 import blockStyle from '../Utility/Style';
 import Counter from '../Components/Counter';
 import Filters from '../Components/Filters';
+// import Filters_payment from '../Components/Filters_payment';
 import DatePicker from '../Components/DatePicker'
-import { orderFilters, paymentFilters } from '../Utility/filterList';
+import { orderFilters, paymentFilters,deliveryFilters, paymentModeFilters } from '../Utility/filterList';
 import { getCustomerAddress, getDateFormat, getDeliveryAgentName } from "../Utility/paramsConvert";
-
 const useStyles = makeStyles(blockStyle);
 
 
@@ -41,55 +41,33 @@ const Content = (props) => {
   const { circleId, authToken } = useParams();
   const [activeOrderFilter, setActiveOrderFilter] = useState([]);
   const [activePaymentFilter, setActivePaymentFilter] = useState([]);
+  const [activeDeliveryFilter, setActiveDeliveryFilter] = useState([]);
+  const [activePaymentModeFilter, setActivePaymentModeFilter] = useState([]);
   const [fromEpochDate, setFromEpochDate] = useState();
   const [toEpochDate, setToEpochDate] = useState();
 
   const onOrderFilterChange = (filter) => {
-
-
-    if (filter === "ALL_ORDER") {
-      if (activeOrderFilter.length === orderFilters.length) {
-        setActiveOrderFilter([]);
-      } else {
-        setActiveOrderFilter(orderFilters.map(filter => filter.value));
-      }
-    } else {
-      if (activeOrderFilter.includes(filter)) {
-        const filterIndex = activeOrderFilter.indexOf(filter);
-        const newFilter = [...activeOrderFilter];
-        newFilter.splice(filterIndex, 1);
-        setActiveOrderFilter(newFilter);
-      } else {
-        setActiveOrderFilter([...activeOrderFilter, filter]);
-      }
-    }
+    setActiveOrderFilter(Array.isArray(filter) ? filter.map( filter => (filter.value)) : []);
+    filter.map(x=>activeOrderFilter.includes(x.value));
     setFilterCompleted(!filterCompleted)
   }
 
   const onPaymentFilterChange = (filter) => {
-
-
-    if (filter === "ALL_PAYMENT") {
-      if (activePaymentFilter.length === paymentFilters.length) {
-        setActivePaymentFilter([]);
-      } else {
-        setActivePaymentFilter(paymentFilters.map(filter => filter.value));
-      }
-    } else {
-      if (activePaymentFilter.includes(filter)) {
-        const filterIndex = activePaymentFilter.indexOf(filter);
-        const newFilter = [...activePaymentFilter];
-        newFilter.splice(filterIndex, 1);
-        setActivePaymentFilter(newFilter);
-      } else {
-        setActivePaymentFilter([...activePaymentFilter, filter]);
-      }
-    }
-
+    
+    setActivePaymentFilter(Array.isArray(filter) ? filter.map( filter => (filter.value)) : []);
     setFilterCompleted(!filterCompleted)
   }
 
+  const onDeliveryFilterChange = (filter) => {
+    setActiveDeliveryFilter(Array.isArray(filter) ? filter.map( filter => (filter.value)) : []);
+    setFilterCompleted(!filterCompleted)
+  }
 
+  const onPaymentModeFilterChange = (filter) => {
+
+    setActivePaymentModeFilter(Array.isArray(filter) ? filter.map( filter => (filter.value)) : []);
+    setFilterCompleted(!filterCompleted)
+  }
 
 
   const changePage = (e, value) => {
@@ -126,7 +104,9 @@ const Content = (props) => {
         circle_id: { circleId }.circleId,
         order_status: activeOrderFilter.join(),
         page: page,
+        delivery_type: activeDeliveryFilter.join(),
         payment_status: activePaymentFilter.join(),
+        payment_via: activePaymentFilter.join(),
         dt_last_modified_from: fromEpochDate,
         dt_last_modified_to: toEpochDate
       }
@@ -198,7 +178,34 @@ const Content = (props) => {
 
 
     <div className={classes.root}>
-      <Counter orderCount={orderCount} />
+      <Grid container spacing={3}>
+      
+        <Grid item xs={2} style={{ padding: "0px" }}>
+            <DatePicker handleDateChange={onDateEpochChange} ></DatePicker>
+        </Grid>
+        <Grid item xs={1} style={{ padding: "4px" }}>
+            <h3>Order Status</h3>
+            <Filters handleFilterChange={onOrderFilterChange}  activeFilterFilter={activeOrderFilter} filterUtility={orderFilters}></Filters>
+        </Grid>
+        <Grid item xs={1} style={{ padding: "4px" }}>
+            <h3>Payment Filters</h3>
+            <Filters handleFilterChange={onPaymentFilterChange}  activeFilterFilter={activePaymentFilter} filterUtility={paymentFilters}></Filters>
+        </Grid>
+        <Grid item xs={1} style={{ padding: "4px" }}>
+            <h3>Delivery Filters</h3>
+            <Filters handleFilterChange={onDeliveryFilterChange}  activeFilterFilter={activeDeliveryFilter} filterUtility={deliveryFilters}></Filters>
+        </Grid>
+        <Grid item xs={1} style={{ padding: "4px" }}>
+          <h3>Payment Mode</h3>
+          <Filters handleFilterChange={onPaymentModeFilterChange}  activeFilterFilter={activePaymentModeFilter} filterUtility={paymentModeFilters}></Filters>
+        </Grid>
+        <Grid item xs={4} style={{ padding: "5px" }}>
+          <Counter orderCount={orderCount} />
+        </Grid>
+      </Grid>
+      <div className={classes.root} >
+      <Grid container spacing={3} style={{ paddingTop: "30px"}} >
+      <Grid item xs={2} >
       <Button onClick={() => {
         setFromEpochDate();
         setToEpochDate();
@@ -207,19 +214,16 @@ const Content = (props) => {
         <RefreshIcon >
         </RefreshIcon>
       </Button>
-
-      <div style={{ marginTop: "2em" }}>
+      </Grid>
+         
+      </Grid>
+      </div>
+      <div style={{ marginTop: "0em" }}>
 
         <Grid container spacing={3}>
-          <Grid item xs={2} style={{ padding: "0px" }}>
-            <DatePicker handleDateChange={onDateEpochChange} ></DatePicker>
-
-
-
-            <Filters handleOrderChange={onOrderFilterChange} handlePaymentChange={onPaymentFilterChange} activeOrderFilter={activeOrderFilter} activePaymentFilter={activePaymentFilter}></Filters>
-          </Grid>
-          <Grid item xs={10}>
-            <TableContainer component={Paper} style={{ height: "100%", width: "75%", display: "block", overflow: "auto" }}>
+          
+          <Grid item xs={12}>
+            <TableContainer component={Paper} style={{ height: "100%", width: "100%", display: "block", overflow: "auto" }}>
               <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                   <TableRow>
@@ -231,7 +235,7 @@ const Content = (props) => {
 
                       }}
                     >
-                      {column.label}
+                       <strong>{column.label}</strong>
                     </TableCell>))}
 
                   </TableRow>
