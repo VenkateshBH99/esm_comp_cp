@@ -68,6 +68,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<<<<<<< HEAD
 
 
 ### To Build Docker Container 
@@ -76,3 +77,5 @@ sudo docker build --tag cp_console .
 ### To run Container
 sudo docker run -p 4250:80 -d --name bugefycontainer cp_console
 
+=======
+>>>>>>> a6690ce (order UI recreation)
