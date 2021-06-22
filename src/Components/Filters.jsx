@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react';
-
-import Typography from '@material-ui/core/Typography';
-import Checkbox from '@material-ui/core/Checkbox';
-import Grid from '@material-ui/core/Grid';
 import MultiSelect from "react-multi-select-component";
-// import { orderFilters, paymentFilters } from '../Utility/filterList';
-import DatePicker from '../Components/DatePicker';
+
 
 
 const Filters = (props) => {

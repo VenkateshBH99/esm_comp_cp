@@ -112,29 +112,24 @@ const paymentModeFilters = [
         value: "COD"
     },
     {
-        id: 13,
-        label: "Direct UPI",
-        value: "Direct UPI"
-    },
-    {
         id: 14,
         label: "UPI",
-        value: "upi"
+        value: "UPI"
     },
     {
         id: 15,
         label: "NetBanking",
-        value: "netbanking"
+        value: "NETBANKING"
     },
     {
         id: 16,
         label: "Wallet",
-        value: "wallet"
+        value: "WALLET"
     },
     {
         id: 17,
         label: "Card",
-        value: "card"
+        value: "CARD"
     },
 ];    
 

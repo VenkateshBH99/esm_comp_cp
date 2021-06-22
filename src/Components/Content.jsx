@@ -14,19 +14,18 @@ import Grid from '@material-ui/core/Grid';
 import { Pagination } from '@material-ui/lab';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import { Button } from 'react-bootstrap';
-import axios from 'axios';
+import DownloadButton from '@material-ui/core/Button';
 
+import axios from 'axios';
 import config from '../Utility/config';
 import blockStyle from '../Utility/Style';
 import Counter from '../Components/Counter';
 import Filters from '../Components/Filters';
-// import Filters_payment from '../Components/Filters_payment';
 import DatePicker from '../Components/DatePicker'
 import { orderFilters, paymentFilters,deliveryFilters, paymentModeFilters } from '../Utility/filterList';
 import { getCustomerAddress, getDateFormat, getDeliveryAgentName } from "../Utility/paramsConvert";
 const useStyles = makeStyles(blockStyle);
-
-
+var fileDownload = require('js-file-download');
 
 const Content = (props) => {
   const classes = useStyles();
@@ -46,6 +45,7 @@ const Content = (props) => {
   const [fromEpochDate, setFromEpochDate] = useState();
   const [toEpochDate, setToEpochDate] = useState();
 
+ 
   const onOrderFilterChange = (filter) => {
     setActiveOrderFilter(Array.isArray(filter) ? filter.map( filter => (filter.value)) : []);
     filter.map(x=>activeOrderFilter.includes(x.value));
@@ -94,7 +94,7 @@ const Content = (props) => {
 
     const token = localStorage.getItem("authenticationToken");
     const circleID = localStorage.getItem("circle_id");
-
+    
     //Making API call to backend
     axios.get(config.apiUrl, {
       headers: {
@@ -106,7 +106,7 @@ const Content = (props) => {
         page: page,
         delivery_type: activeDeliveryFilter.join(),
         payment_status: activePaymentFilter.join(),
-        payment_via: activePaymentFilter.join(),
+        payment_mode: activePaymentModeFilter.join(),
         dt_last_modified_from: fromEpochDate,
         dt_last_modified_to: toEpochDate
       }
@@ -122,11 +122,38 @@ const Content = (props) => {
 
   }, [filterCompleted, page])
 
-
+  const downloadAPI=()=>{
+    const token = localStorage.getItem("authenticationToken");
+    const circleID = localStorage.getItem("circle_id");
+    
+    //Making API call to backend
+    axios.get(config.downloadUrl, {
+      headers: {
+        'Authorization': "JWT " + { authToken }.authToken
+      },
+      params: {
+        circle_id: { circleId }.circleId,
+        order_status: activeOrderFilter.join(),
+        delivery_type: activeDeliveryFilter.join(),
+        payment_status: activePaymentFilter.join(),
+        payment_mode: activePaymentModeFilter.join(),
+        dt_last_modified_from: fromEpochDate,
+        dt_last_modified_to: toEpochDate
+        
+      }
+    })
+      .then(response => {
+        console.log(Date().toLocaleString());
+        fileDownload(response.data, 'OrderUI ('+Date().toString()+').csv');
+        
+      })
+      .catch(function (error) {
+        alert("Unauthorize or slow internet")
+      })
+  }
 
   const rows = (tableData.map((item, key) => {
-
-
+    
     return {
       id: item.order.order_short_number,
       Order_created_date: getDateFormat(item.order.created),
@@ -149,10 +176,6 @@ const Content = (props) => {
     }
   }))
 
-
-
-
-
   const columns = [
     { id: "id", label: "OrderId", minWidth: 50, align: 'left' },
     { id: "Order_created_date", label: "Order Created Date", minWidth: 100, align: 'left' },
@@ -173,6 +196,7 @@ const Content = (props) => {
     { id: "Customer_address", label: "Customer Address", minWidth: 50, align: 'left' },
   ];
 
+  
 
   return (
 
@@ -188,16 +212,20 @@ const Content = (props) => {
             <Filters handleFilterChange={onOrderFilterChange}  activeFilterFilter={activeOrderFilter} filterUtility={orderFilters}></Filters>
         </Grid>
         <Grid item xs={1} style={{ padding: "4px" }}>
-            <h3>Payment Filters</h3>
+            <h3>Payment Status</h3>
             <Filters handleFilterChange={onPaymentFilterChange}  activeFilterFilter={activePaymentFilter} filterUtility={paymentFilters}></Filters>
         </Grid>
         <Grid item xs={1} style={{ padding: "4px" }}>
-            <h3>Delivery Filters</h3>
+            <h3>Delivery Status</h3>
             <Filters handleFilterChange={onDeliveryFilterChange}  activeFilterFilter={activeDeliveryFilter} filterUtility={deliveryFilters}></Filters>
         </Grid>
         <Grid item xs={1} style={{ padding: "4px" }}>
           <h3>Payment Mode</h3>
           <Filters handleFilterChange={onPaymentModeFilterChange}  activeFilterFilter={activePaymentModeFilter} filterUtility={paymentModeFilters}></Filters>
+        </Grid>
+        <Grid item xs={1} style={{ padding: "5px" }}>
+        <h4>Download File</h4>
+          <DownloadButton variant="contained" color="primary" onClick={downloadAPI}>Download</DownloadButton>
         </Grid>
         <Grid item xs={4} style={{ padding: "5px" }}>
           <Counter orderCount={orderCount} />
