@@ -202,50 +202,59 @@ const Content = (props) => {
 
 
     <div className={classes.root}>
+
       <Grid container spacing={3}>
-      
+
         <Grid item xs={2} style={{ padding: "0px" }}>
             <DatePicker handleDateChange={onDateEpochChange} ></DatePicker>
         </Grid>
+
         <Grid item xs={1} style={{ padding: "4px" }}>
             <h3>Order Status</h3>
             <Filters handleFilterChange={onOrderFilterChange}  activeFilterFilter={activeOrderFilter} filterUtility={orderFilters}></Filters>
         </Grid>
+
         <Grid item xs={1} style={{ padding: "4px" }}>
             <h3>Payment Status</h3>
             <Filters handleFilterChange={onPaymentFilterChange}  activeFilterFilter={activePaymentFilter} filterUtility={paymentFilters}></Filters>
         </Grid>
+
         <Grid item xs={1} style={{ padding: "4px" }}>
             <h3>Delivery Status</h3>
             <Filters handleFilterChange={onDeliveryFilterChange}  activeFilterFilter={activeDeliveryFilter} filterUtility={deliveryFilters}></Filters>
         </Grid>
+
         <Grid item xs={1} style={{ padding: "4px" }}>
           <h3>Payment Mode</h3>
           <Filters handleFilterChange={onPaymentModeFilterChange}  activeFilterFilter={activePaymentModeFilter} filterUtility={paymentModeFilters}></Filters>
         </Grid>
+
         <Grid item xs={1} style={{ padding: "5px" }}>
-        <h4>Download File</h4>
+          <h4>Download File</h4>
           <DownloadButton variant="contained" color="primary" onClick={downloadAPI}>Download</DownloadButton>
         </Grid>
+
         <Grid item xs={4} style={{ padding: "5px" }}>
           <Counter orderCount={orderCount} />
         </Grid>
+
       </Grid>
       <div className={classes.root} >
+
       <Grid container spacing={3} style={{ paddingTop: "30px"}} >
-      <Grid item xs={2} >
-      <Button onClick={() => {
-        setFromEpochDate();
-        setToEpochDate();
-        setFilterCompleted(!filterCompleted)
-      }}>
-        <RefreshIcon >
-        </RefreshIcon>
-      </Button>
-      </Grid>
-         
+        <Grid item xs={2} >
+          <Button onClick={() => {
+            setFromEpochDate();
+            setToEpochDate();
+            setFilterCompleted(!filterCompleted)
+          }}>
+            <RefreshIcon >
+            </RefreshIcon>
+          </Button>
+        </Grid>  
       </Grid>
       </div>
+      
       <div style={{ marginTop: "0em" }}>
 
         <Grid container spacing={3}>

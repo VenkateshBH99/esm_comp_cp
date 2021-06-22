@@ -15,7 +15,6 @@ const Counter = (props) => {
     const classes = useStyles();
     return (
         <div>
-
             <div className={classes.flexDiv1}>
                 <Card raised={true} className={classes.card}>
                     <CardContent>

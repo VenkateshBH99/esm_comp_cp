@@ -90,8 +90,6 @@ const paymentFilters = [
     }];
 
 const deliveryFilters = [
-
-
     {
         id: 12,
         label: "Self Pickup",
@@ -104,8 +102,6 @@ const deliveryFilters = [
     }];
 
 const paymentModeFilters = [
-
-
     {
         id: 12,
         label: "Cash On Delivery",
