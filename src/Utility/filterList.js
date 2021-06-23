@@ -87,6 +87,11 @@ const paymentFilters = [
         id: 18,
         label: "Refund Fail",
         value: "REFUND_FAIL"
+    },
+    {
+        id: 19,
+        label: "Pending",
+        value: "PENDING"
     }];
 
 const deliveryFilters = [
