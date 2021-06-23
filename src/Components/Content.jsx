@@ -144,7 +144,7 @@ const Content = (props) => {
     })
       .then(response => {
         console.log(Date().toLocaleString());
-        fileDownload(response.data, 'OrderUI ('+Date().toString()+').csv');
+        fileDownload(response.data, 'Order Data ('+Date().toString()+').csv');
         
       })
       .catch(function (error) {
@@ -205,44 +205,33 @@ const Content = (props) => {
 
       <Grid container spacing={3}>
 
-        <Grid item xs={2} style={{ padding: "0px" }}>
+        <Grid item xs={4} style={{ padding: "10px" }}>
             <DatePicker handleDateChange={onDateEpochChange} ></DatePicker>
         </Grid>
 
-        <Grid item xs={1} style={{ padding: "4px" }}>
-            <h3>Order Status</h3>
-            <Filters handleFilterChange={onOrderFilterChange}  activeFilterFilter={activeOrderFilter} filterUtility={orderFilters}></Filters>
+        <Grid item xs={2} style={{ padding: "4px" }}>
+            <h4>ORDER STATUS</h4>
+          <Filters handleFilterChange={onOrderFilterChange}  activeFilterFilter={activeOrderFilter} filterUtility={orderFilters} ></Filters>
+            <h4>DELIVERY STATUS</h4>
+          <Filters handleFilterChange={onDeliveryFilterChange}  activeFilterFilter={activeDeliveryFilter} filterUtility={deliveryFilters}></Filters> 
         </Grid>
 
-        <Grid item xs={1} style={{ padding: "4px" }}>
-            <h3>Payment Status</h3>
-            <Filters handleFilterChange={onPaymentFilterChange}  activeFilterFilter={activePaymentFilter} filterUtility={paymentFilters}></Filters>
+        <Grid item xs={2} style={{ padding: "4px" }}>
+            <h4>PAYMENT STATUS</h4>
+          <Filters handleFilterChange={onPaymentFilterChange}  activeFilterFilter={activePaymentFilter} filterUtility={paymentFilters}></Filters>
+            <h4>PAYMENT MODE</h4>
+          <Filters handleFilterChange={onPaymentModeFilterChange}  activeFilterFilter={activePaymentModeFilter} filterUtility={paymentModeFilters}></Filters>      
         </Grid>
 
-        <Grid item xs={1} style={{ padding: "4px" }}>
-            <h3>Delivery Status</h3>
-            <Filters handleFilterChange={onDeliveryFilterChange}  activeFilterFilter={activeDeliveryFilter} filterUtility={deliveryFilters}></Filters>
-        </Grid>
-
-        <Grid item xs={1} style={{ padding: "4px" }}>
-          <h3>Payment Mode</h3>
-          <Filters handleFilterChange={onPaymentModeFilterChange}  activeFilterFilter={activePaymentModeFilter} filterUtility={paymentModeFilters}></Filters>
-        </Grid>
-
-        <Grid item xs={1} style={{ padding: "5px" }}>
-          <h4>Download File</h4>
-          <DownloadButton variant="contained" color="primary" onClick={downloadAPI}>Download</DownloadButton>
-        </Grid>
-
-        <Grid item xs={4} style={{ padding: "5px" }}>
+        <Grid item xs={3} style={{ paddingTop: "60px" }}>
           <Counter orderCount={orderCount} />
         </Grid>
 
       </Grid>
-      <div className={classes.root} >
+     
 
       <Grid container spacing={3} style={{ paddingTop: "30px"}} >
-        <Grid item xs={2} >
+        <Grid item xs={1} >
           <Button onClick={() => {
             setFromEpochDate();
             setToEpochDate();
@@ -251,10 +240,15 @@ const Content = (props) => {
             <RefreshIcon >
             </RefreshIcon>
           </Button>
-        </Grid>  
+        </Grid>
+        
+        <Grid item xs={1} style={{ paddingLeft: "5px" }}>
+          {/* <h4>Download File</h4> */}
+          <DownloadButton variant="contained" color="primary" onClick={downloadAPI}>Download</DownloadButton>
+        </Grid>
+
       </Grid>
-      </div>
-      
+  
       <div style={{ marginTop: "0em" }}>
 
         <Grid container spacing={3}>

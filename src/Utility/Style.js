@@ -7,7 +7,7 @@ const blockStyle = {
         justifyContent: "space-around"
     },
     card: {
-        width: "20%",
+        width: "50%",
         backgroundColor: "#ffffff",
         textAlign: "center",
     },
