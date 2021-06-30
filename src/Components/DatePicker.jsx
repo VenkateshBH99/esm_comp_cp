@@ -19,17 +19,19 @@ export default function DatePicker(props) {
     
 
     const handleDateFromChange = (date) => {
+        let newFromDate=new Date(date.toString().replace(/[0-9][0-9]:.* GMT/,'00:00:00 GMT'));
         clickedRefFrom.current = true;
-        setFromDate(date);
-        props.handleDateChange(String(getDateEpoch(date)).slice(0, 10), "ChangeFrom")
+        setFromDate(newFromDate);
+        props.handleDateChange(String(getDateEpoch(newFromDate)).slice(0, 10), "ChangeFrom")
 
 
 
     };
     const handleDateToChange = (date) => {
+        let newToDate=new Date(date.toString().replace(/[0-9][0-9]:.* GMT/,'23:59:59 GMT'));
         clickedRefTo.current = true;
-        setToDate(date);
-        props.handleDateChange(String(getDateEpoch(date)).slice(0, 10), "ChangeTo")
+        setToDate(newToDate);
+        props.handleDateChange(String(getDateEpoch(newToDate)).slice(0, 10), "ChangeTo")
 
 
 

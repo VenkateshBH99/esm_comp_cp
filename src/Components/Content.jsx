@@ -95,23 +95,6 @@ const Content = (props) => {
     const token = localStorage.getItem("authenticationToken");
     const circleID = localStorage.getItem("circle_id");
 
-    var newFromEpochDate=fromEpochDate;
-    var newToEpochDate=toEpochDate;
-
-    if(fromEpochDate!=null)
-    {
-      var myDateFrom = new Date( fromEpochDate *1000);
-      let fromDate = new Date(myDateFrom.toString().replace(/[0-9][0-9]:.* GMT/,'00:00:00 GMT'));
-      newFromEpochDate = fromDate.getTime()/1000.0;
-    }
-    
-    if(toEpochDate!=null)
-    {
-      var myDateTo = new Date( toEpochDate *1000);
-      let toDate = new Date(myDateTo.toString().replace(/[0-9][0-9]:.* GMT/,'23:59:59 GMT'));
-      newToEpochDate = toDate.getTime()/1000.0;
-    }
-    
     //Making API call to backend
     axios.get(config.apiUrl, {
       headers: {
@@ -124,8 +107,8 @@ const Content = (props) => {
         delivery_type: activeDeliveryFilter.join(),
         payment_status: activePaymentFilter.join(),
         payment_mode: activePaymentModeFilter.join(),
-        dt_last_modified_from: newFromEpochDate,
-        dt_last_modified_to: newToEpochDate
+        dt_last_modified_from: fromEpochDate,
+        dt_last_modified_to: toEpochDate
       }
     })
       .then(response => {
