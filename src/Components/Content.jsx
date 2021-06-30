@@ -95,15 +95,21 @@ const Content = (props) => {
     const token = localStorage.getItem("authenticationToken");
     const circleID = localStorage.getItem("circle_id");
 
-    var myDateFrom = new Date( fromEpochDate *1000);
-    let fromDate = new Date(myDateFrom.toString().replace(/[0-9][0-9]:.* GMT/,'00:00:00 GMT'));
-    var newFromEpochDate = fromDate.getTime()/1000.0;
+    var newFromEpochDate=fromEpochDate;
+    var newToEpochDate=toEpochDate;
 
+    if(fromEpochDate!=null)
+    {
+      var myDateFrom = new Date( fromEpochDate *1000);
+      let fromDate = new Date(myDateFrom.toString().replace(/[0-9][0-9]:.* GMT/,'00:00:00 GMT'));
+      newFromEpochDate = fromDate.getTime()/1000.0;
+    }
+    
     if(toEpochDate!=null)
     {
       var myDateTo = new Date( toEpochDate *1000);
       let toDate = new Date(myDateTo.toString().replace(/[0-9][0-9]:.* GMT/,'23:59:59 GMT'));
-      var newToEpochDate = toDate.getTime()/1000.0;
+      newToEpochDate = toDate.getTime()/1000.0;
     }
     
     //Making API call to backend
