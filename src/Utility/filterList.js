@@ -10,7 +10,7 @@ const orderFilters = [{
 },
 {
     id: 13,
-    label: "Assigned_to_DA",
+    label: "Assigned to DA",
     value: "ASSIGNED_TO_DA"
 },
 {
@@ -40,7 +40,7 @@ const orderFilters = [{
 },
 {
     id: 19,
-    label: "Requesting_to_DA",
+    label: "Requesting to DA",
     value: "REQUESTING_TO_DA"
 },
 
