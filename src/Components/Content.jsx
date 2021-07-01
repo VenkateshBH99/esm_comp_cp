@@ -94,7 +94,7 @@ const Content = (props) => {
 
     const token = localStorage.getItem("authenticationToken");
     const circleID = localStorage.getItem("circle_id");
-    
+
     //Making API call to backend
     axios.get(config.apiUrl, {
       headers: {
