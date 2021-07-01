@@ -171,7 +171,8 @@ const Content = (props) => {
       Payment_id: item.order.payment_info.payment_id,
       Customer_name: item.order.customer_name,
       Customer_number: item.order.customer_phones,
-      Customer_address: getCustomerAddress(item.order.delivery_address)
+      Customer_address: getCustomerAddress(item.order.delivery_address),
+      long_id: item.order.order_id
 
     }
   }))
@@ -194,6 +195,7 @@ const Content = (props) => {
     { id: "Customer_name", label: "Customer Name", minWidth: 50, align: 'left' },
     { id: "Customer_number", label: "Customer Number", minWidth: 50, align: 'left' },
     { id: "Customer_address", label: "Customer Address", minWidth: 50, align: 'left' },
+    { id: "long_id", label: "Long OrderId", minWidth: 50, align: 'left' },
   ];
 
   
@@ -294,6 +296,7 @@ const Content = (props) => {
                           <TableCell align="left">{row.Customer_name}</TableCell>
                           <TableCell align="left">{row.Customer_number}</TableCell>
                           <TableCell align="left">{row.Customer_address}</TableCell>
+                          <TableCell align="left">{row.long_id}</TableCell>
 
                         </TableRow>
                       ) : null
