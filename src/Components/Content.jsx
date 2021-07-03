@@ -154,7 +154,6 @@ const Content = (props) => {
       }
     })
       .then(response => {
-        console.log(Date().toLocaleString());
         fileDownload(response.data, 'Order Data ('+Date().toString()+').csv');
         
       })
