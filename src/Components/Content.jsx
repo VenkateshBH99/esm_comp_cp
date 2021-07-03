@@ -37,7 +37,7 @@ const Content = (props) => {
   const [orderStatus, setorderStatus] = useState({});
   const [filterCompleted, setFilterCompleted] = useState(true)
   const [page, setPage] = useState(1);
-  const { circleId, authToken, permission} = useParams();
+  const { permission, circleId, authToken } = useParams();
   const [activeOrderFilter, setActiveOrderFilter] = useState([]);
   const [activePaymentFilter, setActivePaymentFilter] = useState([]);
   const [activeDeliveryFilter, setActiveDeliveryFilter] = useState([]);
