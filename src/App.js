@@ -15,7 +15,7 @@ function App() {
       <BrowserRouter>
         <Switch>
 
-          <Route path="/:circleId/:authToken" >
+          <Route path="/:permission/:circleId/:authToken" >
 
             <Content></Content>
           </Route>

@@ -37,14 +37,25 @@ const Content = (props) => {
   const [orderStatus, setorderStatus] = useState({});
   const [filterCompleted, setFilterCompleted] = useState(true)
   const [page, setPage] = useState(1);
-  const { circleId, authToken } = useParams();
+  const { circleId, authToken, permission} = useParams();
   const [activeOrderFilter, setActiveOrderFilter] = useState([]);
   const [activePaymentFilter, setActivePaymentFilter] = useState([]);
   const [activeDeliveryFilter, setActiveDeliveryFilter] = useState([]);
   const [activePaymentModeFilter, setActivePaymentModeFilter] = useState([]);
   const [fromEpochDate, setFromEpochDate] = useState();
   const [toEpochDate, setToEpochDate] = useState();
-
+  let apiUrl=null;
+  let downloadUrl=null;
+  if(permission==="Staging")
+  {
+    apiUrl=config.apiUrlStaging;
+    downloadUrl=config.downloadUrlStaging;
+  }
+  else if(permission==="Prod")
+  {
+    apiUrl=config.apiUrlProd;
+    downloadUrl=config.downloadUrlProd;
+  }
  
   const onOrderFilterChange = (filter) => {
     setActiveOrderFilter(Array.isArray(filter) ? filter.map( filter => (filter.value)) : []);
@@ -96,7 +107,7 @@ const Content = (props) => {
     const circleID = localStorage.getItem("circle_id");
 
     //Making API call to backend
-    axios.get(config.apiUrl, {
+    axios.get(apiUrl, {
       headers: {
         'Authorization': "JWT " + { authToken }.authToken
       },
@@ -127,7 +138,7 @@ const Content = (props) => {
     const circleID = localStorage.getItem("circle_id");
     
     //Making API call to backend
-    axios.get(config.downloadUrl, {
+    axios.get(downloadUrl, {
       headers: {
         'Authorization': "JWT " + { authToken }.authToken
       },
