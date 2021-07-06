@@ -12,7 +12,7 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.1",
-    "date-fns": "^2.0.0-beta.5",
+    "date-fns": "^2.22.1",
     "dotenv": "^10.0.0",
     "env-cmd": "^10.1.0",
     "js-file-download": "^0.4.12",
