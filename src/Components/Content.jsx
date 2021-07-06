@@ -96,7 +96,7 @@ const Content = (props) => {
     const circleID = localStorage.getItem("circle_id");
 
     //Making API call to backend
-    axios.get(config.apiUrl, {
+    axios.get(config.getOrderListUrl, {
       headers: {
         'Authorization': "JWT " + { authToken }.authToken
       },
@@ -127,7 +127,7 @@ const Content = (props) => {
     const circleID = localStorage.getItem("circle_id");
     
     //Making API call to backend
-    axios.get(config.downloadUrl, {
+    axios.get(config.downloadOrderListUrl, {
       headers: {
         'Authorization': "JWT " + { authToken }.authToken
       },
@@ -143,7 +143,6 @@ const Content = (props) => {
       }
     })
       .then(response => {
-        console.log(Date().toLocaleString());
         fileDownload(response.data, 'Order Data ('+Date().toString()+').csv');
         
       })
