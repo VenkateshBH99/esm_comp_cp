@@ -69,6 +69,10 @@ const Content = (props) => {
     setFilterCompleted(!filterCompleted)
   }
 
+  const convertPaisaToRupee = (value) => {
+    value = value/100;
+    return value;
+  }
 
   const changePage = (e, value) => {
 
@@ -159,11 +163,11 @@ const Content = (props) => {
       last_update: getDateFormat(item.order.modified),
       Status: item.order.order_status,
       Seller: item.order.business_name,
-      Order_amt: item.order.order_total,
+      Order_amt: convertPaisaToRupee(item.order.order_total),
       Delivery_type: item.order.delivery_type,
-      Delivery_charges: item.order.delivery_charges,
-      Other_charges: item.order.other_charges,
-      Item_Total: item.order.item_total,
+      Delivery_charges: convertPaisaToRupee(item.order.delivery_charges),
+      Other_charges: convertPaisaToRupee(item.order.other_charges),
+      Item_Total: convertPaisaToRupee(item.order.item_total),
       Delivery_Agent: getDeliveryAgentName(item.order.da_info),
       Payment_Status: item.order.payment_info.status,
       Payment_mode: item.order.payment_info.via,
