@@ -70,6 +70,12 @@ const Content = (props) => {
   }
 
   const convertPaisaToRupee = (value) => {
+
+    if(value==null)
+    {
+      return value;
+    }
+
     value = value/100;
     return value;
   }
